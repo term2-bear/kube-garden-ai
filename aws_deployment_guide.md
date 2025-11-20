@@ -21,7 +21,7 @@
 
 ## 3. 배포하기 (Deployment)
 
-터미널에서 프로젝트 루트 경로(`/Users/user/LJT/NaverCloud/Softbank/agent_v1`)로 이동한 후 다음 명령어를 순서대로 실행하세요.
+터미널에서 프로젝트 루트 경로로 이동한 후 다음 명령어를 순서대로 실행하세요.
 
 ### 1단계: 빌드
 필요한 패키지를 설치하고 배포 아티팩트를 준비합니다.
@@ -58,9 +58,6 @@ sam deploy --guided
 3.  **Configuration** (구성) -> **Environment variables** (환경 변수) 탭 클릭
 4.  **Edit** (편집)을 눌러 다음 변수들을 추가/수정합니다.
     *   `OPENAI_API_KEY`
-    *   `TAVILY_API_KEY`
-    *   `NAVER_CLIENT_ID`
-    *   `NAVER_CLIENT_SECRET`
 
 ## 5. 테스트
 
