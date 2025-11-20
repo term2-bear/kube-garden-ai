@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+mangum
+langchain
+langgraph
+langchain-openai
+python-dotenv
+boto3
+kubernetes
+requests

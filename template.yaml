@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  FastAPI Agent Serverless Deployment
+
+Globals:
+  Function:
+    Timeout: 60
+    MemorySize: 512
+    Environment:
+      Variables:
+        OPENAI_API_KEY: "" # 배포 시 또는 AWS 콘솔에서 설정 필요
+        TAVILY_API_KEY: "" # 배포 시 또는 AWS 콘솔에서 설정 필요
+        NAVER_CLIENT_ID: "" # 배포 시 또는 AWS 콘솔에서 설정 필요
+        NAVER_CLIENT_SECRET: "" # 배포 시 또는 AWS 콘솔에서 설정 필요
+
+Resources:
+  AgentApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      BinaryMediaTypes:
+        - "*/*"
+
+  AgentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: server.handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+            RestApiId: !Ref AgentApi
+        RootEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: any
+            RestApiId: !Ref AgentApi
+
+Outputs:
+  AgentApiEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${AgentApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
